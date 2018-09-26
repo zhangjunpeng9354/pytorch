@@ -3,7 +3,7 @@ producer_name: "pytorch"
 producer_version: "0.4"
 graph {
   node {
-    output: "1"
+    output: "2"
     op_type: "Constant"
     attribute {
       name: "value"
@@ -15,14 +15,14 @@ graph {
     }
   }
   node {
-    input: "0"
     input: "1"
-    output: "2"
+    input: "2"
+    output: "3"
     op_type: "Add"
   }
   name: "torch-jit-export"
   input {
-    name: "0"
+    name: "1"
     type {
       tensor_type {
         elem_type: DOUBLE
@@ -38,7 +38,7 @@ graph {
     }
   }
   output {
-    name: "2"
+    name: "3"
     type {
       tensor_type {
         elem_type: DOUBLE

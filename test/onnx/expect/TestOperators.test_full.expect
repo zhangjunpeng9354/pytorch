@@ -3,7 +3,7 @@ producer_name: "pytorch"
 producer_version: "0.4"
 graph {
   node {
-    output: "1"
+    output: "2"
     op_type: "Constant"
     attribute {
       name: "value"
@@ -15,14 +15,14 @@ graph {
     }
   }
   node {
-    input: "0"
-    output: "2"
+    input: "1"
+    output: "3"
     op_type: "Shape"
   }
   node {
+    input: "3"
     input: "2"
-    input: "1"
-    output: "3"
+    output: "4"
     op_type: "Gather"
     attribute {
       name: "axis"
@@ -31,7 +31,7 @@ graph {
     }
   }
   node {
-    output: "4"
+    output: "5"
     op_type: "Constant"
     attribute {
       name: "value"
@@ -43,14 +43,14 @@ graph {
     }
   }
   node {
-    input: "0"
-    output: "5"
+    input: "1"
+    output: "6"
     op_type: "Shape"
   }
   node {
+    input: "6"
     input: "5"
-    input: "4"
-    output: "6"
+    output: "7"
     op_type: "Gather"
     attribute {
       name: "axis"
@@ -59,17 +59,7 @@ graph {
     }
   }
   node {
-    input: "3"
-    output: "7"
-    op_type: "Unsqueeze"
-    attribute {
-      name: "axes"
-      ints: 0
-      type: INTS
-    }
-  }
-  node {
-    input: "6"
+    input: "4"
     output: "8"
     op_type: "Unsqueeze"
     attribute {
@@ -80,8 +70,18 @@ graph {
   }
   node {
     input: "7"
-    input: "8"
     output: "9"
+    op_type: "Unsqueeze"
+    attribute {
+      name: "axes"
+      ints: 0
+      type: INTS
+    }
+  }
+  node {
+    input: "8"
+    input: "9"
+    output: "10"
     op_type: "Concat"
     attribute {
       name: "axis"
@@ -90,8 +90,8 @@ graph {
     }
   }
   node {
-    input: "9"
-    output: "10"
+    input: "10"
+    output: "11"
     op_type: "ConstantFill"
     attribute {
       name: "dtype"
@@ -111,7 +111,7 @@ graph {
   }
   name: "torch-jit-export"
   input {
-    name: "0"
+    name: "1"
     type {
       tensor_type {
         elem_type: FLOAT
@@ -127,7 +127,7 @@ graph {
     }
   }
   output {
-    name: "10"
+    name: "11"
     type {
       tensor_type {
         elem_type: FLOAT

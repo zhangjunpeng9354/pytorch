@@ -3,36 +3,23 @@ producer_name: "pytorch"
 producer_version: "0.4"
 graph {
   node {
-    input: "0"
     input: "1"
     input: "2"
-    output: "3"
-    op_type: "Sum"
-  }
-  node {
-    input: "0"
+    input: "3"
     output: "4"
-    op_type: "Neg"
+    op_type: "Sum"
   }
   node {
     input: "1"
     output: "5"
     op_type: "Neg"
   }
-  name: "torch-jit-export"
-  input {
-    name: "0"
-    type {
-      tensor_type {
-        elem_type: FLOAT
-        shape {
-          dim {
-            dim_value: 1
-          }
-        }
-      }
-    }
+  node {
+    input: "2"
+    output: "6"
+    op_type: "Neg"
   }
+  name: "torch-jit-export"
   input {
     name: "1"
     type {
@@ -59,7 +46,7 @@ graph {
       }
     }
   }
-  output {
+  input {
     name: "3"
     type {
       tensor_type {
@@ -87,6 +74,19 @@ graph {
   }
   output {
     name: "5"
+    type {
+      tensor_type {
+        elem_type: FLOAT
+        shape {
+          dim {
+            dim_value: 1
+          }
+        }
+      }
+    }
+  }
+  output {
+    name: "6"
     type {
       tensor_type {
         elem_type: FLOAT
