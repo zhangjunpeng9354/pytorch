@@ -646,23 +646,12 @@ Operation listSlice(Node* node) {
 RegisterOperators reg2({
 
 #define CREATE_LIST_OPS(decl_type, c_type) \
-    // Select element in the `b`th position from list `a`
-    // Equivalent to `a[b]` in Python.
     Operator("aten::select(" decl_type "[] a, int b) -> " decl_type, listSelect<Shared<c_type>>), \
-    // Return the size of list `a`
-    // Equivalent to `len(a)` in Python.
     Operator("aten::len(" decl_type "[] a) -> int", listLen<Shared<c_type>>), \
     Operator("aten::add(" decl_type "[] a, " decl_type "[] b) -> " decl_type "[]", listAdd<Shared<c_type>, c_type::ElemType>), \
-    // Return a slice of list `l`, with a specified start, end, and step length
-    // Equivalent to `l[start:end:step]` in Python.
     Operator( \
         "aten::slice(" decl_type "[] l, int start, int end=9223372036854775807, int step=1) -> " decl_type "[]", \
-        listSlice<Shared<c_type>, c_type::ElemType>),
-    // Append `el` to `list`
-    // Equivalent to `list.append(el)` in Python.
-    Operator( \
-        "aten::append(World w, " decl_type "[] list, " decl_type " el) -> World", \
-        listAppend<Shared<c_type>, c_type::ElemType>),
+        listSlice<Shared<c_type>, c_type::ElemType>), \
 
 
     CREATE_LIST_OPS("int", IntList)
@@ -674,6 +663,12 @@ RegisterOperators reg2({
     Operator("aten::eq(int[] a, int[] b) -> int", listEq<Shared<IntList>>),
     Operator("aten::eq(float[] a, float[] b) -> int", listEq<Shared<DoubleList>>),
     Operator("aten::eq(Tensor[] a, Tensor[] b) -> int", listEq<Shared<TensorList>>),
+
+    // Append `el` to `list`
+    // Equivalent to `list.append(el)` in Python.
+    Operator("aten::append(World w, int[] list, int el) -> World", listAppend<Shared<IntList>, int64_t>),
+    Operator("aten::append(World w, float[] list, float el) -> World", listAppend<Shared<DoubleList>, double>),
+    Operator("aten::append(World w, Tensor[] list, Tensor el) -> World", listAppend<Shared<TensorList>, at::Tensor>),
 
     DEFINE_BINARY_OP(aten::add, a + b)
     DEFINE_BINARY_OP(aten::sub, a - b)

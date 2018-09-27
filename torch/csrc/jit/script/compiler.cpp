@@ -695,10 +695,10 @@ static Value* emitBuiltinNode(
     const SourceRange& loc,
     Graph& graph,
     Symbol name) {
-  auto n = graph.insertNode(graph.create(name, matched_schema->inputs, 0))
+  auto n = graph.insertNode(graph.create(name, matched_schema.inputs, 0))
                 ->setSourceLocation(std::make_shared<SourceRange>(loc));
 
-  for(auto & ret : matched_schema->return_types) {
+  for(auto & ret : matched_schema.return_types) {
     n->addOutput()->setType(ret);
   }
 
@@ -740,7 +740,7 @@ Value* emitBuiltinCall(
           convert_tensors_to_nums);
 
       if (matched_schema) {
-        return emitBuiltinNode(matched_schema, loc, graph, name);
+        return emitBuiltinNode(*matched_schema, loc, graph, name);
       }
     }
   }

@@ -66,15 +66,15 @@ struct World {
 
 struct IValue;
 struct C10_EXPORT Tuple : public List<IValue> {
-  using ConstantList<IValue>::ConstantList;
+  using List<IValue>::List;
   static c10::intrusive_ptr<Tuple> create(std::vector<IValue> elements_) {
     return c10::make_intrusive<Tuple>(std::move(elements_));
   }
 };
-using Tuple = List<IValue>;
 using IntList = List<int64_t>;
 using TensorList = List<at::Tensor>;
 using DoubleList = List<double>;
+using GenericList = List<IValue>;
 
 // IValue is the generic tagged union used by the interpreter to hold
 // all value types.
